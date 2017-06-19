@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
-rm /tmp/caravel_unittests.db
+echo $DB
+rm ~/.superset/unittests.db
+rm ~/.superset/celerydb.sqlite
+rm ~/.superset/celery_results.sqlite
 rm -f .coverage
-export CARAVEL_CONFIG=tests.caravel_test_config
+export SUPERSET_CONFIG=tests.superset_test_config
 set -e
-caravel/bin/caravel db upgrade
+superset/bin/superset db upgrade
+superset/bin/superset version -v
 python setup.py nosetests
+coveralls
